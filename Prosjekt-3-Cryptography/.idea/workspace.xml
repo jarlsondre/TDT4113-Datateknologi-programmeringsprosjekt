@@ -22,6 +22,7 @@
     <list default="true" id="8e2331ab-5716-4df4-a148-2e057956ac26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cipher.py" beforeDir="false" afterPath="$PROJECT_DIR$/cipher.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/person.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,12 +49,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager" selected="Python.cipher">
     <configuration name="cipher" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -153,8 +156,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.cipher" />
-        <item itemvalue="Python.crypto_utils" />
         <item itemvalue="Python.person" />
+        <item itemvalue="Python.crypto_utils" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +171,9 @@
       <updated>1612608079624</updated>
       <workItem from="1612608080716" duration="2974000" />
       <workItem from="1612611127350" duration="1090000" />
-      <workItem from="1612724888405" duration="4993000" />
+      <workItem from="1612724888405" duration="5950000" />
+      <workItem from="1612771607367" duration="1986000" />
+      <workItem from="1612773619678" duration="10893000" />
     </task>
     <servers />
   </component>
@@ -192,26 +197,46 @@
       <screen x="-1920" y="360" width="1920" height="1040" />
     </state>
     <state x="-1506" y="535" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612611170772" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1612733017715">
-      <screen x="-1920" y="360" width="1920" height="1040" />
+    <state width="2517" height="302" key="GridCell.Tab.0.bottom" timestamp="1612812176682">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612733017715" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612656632523" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1612733017715">
-      <screen x="-1920" y="360" width="1920" height="1040" />
+    <state width="2517" height="400" key="GridCell.Tab.0.bottom.inPresentationMode" timestamp="1612773219393">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612733017715" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612656632523" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1612733017715">
-      <screen x="-1920" y="360" width="1920" height="1040" />
+    <state width="2517" height="400" key="GridCell.Tab.0.bottom.inPresentationMode/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612773219393" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612737907813" />
+    <state width="2517" height="302" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612812176682" />
+    <state width="2517" height="302" key="GridCell.Tab.0.center" timestamp="1612812176682">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612733017715" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612656632522" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1612733017715">
-      <screen x="-1920" y="360" width="1920" height="1040" />
+    <state width="2517" height="400" key="GridCell.Tab.0.center.inPresentationMode" timestamp="1612773219393">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612733017715" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612656632523" />
+    <state width="2517" height="400" key="GridCell.Tab.0.center.inPresentationMode/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612773219393" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612737907813" />
+    <state width="2517" height="302" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612812176682" />
+    <state width="2517" height="302" key="GridCell.Tab.0.left" timestamp="1612812176682">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.left.inPresentationMode" timestamp="1612773219393">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.left.inPresentationMode/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612773219393" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612737907813" />
+    <state width="2517" height="302" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612812176682" />
+    <state width="2517" height="302" key="GridCell.Tab.0.right" timestamp="1612812176682">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.right.inPresentationMode" timestamp="1612773219393">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="400" key="GridCell.Tab.0.right.inPresentationMode/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612773219393" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.360.1920.1040@-1920.360.1920.1040" timestamp="1612737907813" />
+    <state width="2517" height="302" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612812176682" />
+    <state x="69" y="0" key="SettingsEditor" timestamp="1612774591950">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="69" y="0" key="SettingsEditor/0.0.2560.1400/-1920.360.1920.1040@0.0.2560.1400" timestamp="1612774591950" />
     <state x="-1297" y="585" width="672" height="678" key="search.everywhere.popup" timestamp="1612732755682">
       <screen x="-1920" y="360" width="1920" height="1040" />
     </state>
@@ -220,7 +245,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Prosjekt_3_Cryptography$crypto_utils.coverage" NAME="crypto_utils Coverage Results" MODIFIED="1612611183359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Prosjekt_3$cipher.coverage" NAME="cipher Coverage Results" MODIFIED="1612610618821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Prosjekt_3_Cryptography$cipher.coverage" NAME="cipher Coverage Results" MODIFIED="1612733017710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Prosjekt_3_Cryptography$person.coverage" NAME="person Coverage Results" MODIFIED="1612611179736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Prosjekt_3_Cryptography$cipher.coverage" NAME="cipher Coverage Results" MODIFIED="1612783042923" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Prosjekt_3_Cryptography$person.coverage" NAME="person Coverage Results" MODIFIED="1612782674418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
