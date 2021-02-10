@@ -119,6 +119,7 @@ class RSA(Cipher):
         number, encrypt, decrypt = self.generate_keys()
         self.public_key = (number, encrypt)
         self.private_key = (number, decrypt)
+        print(self.private_key, self.public_key)
 
     def generate_keys(self):
         prime1 = crypto_utils.generate_random_prime(8)
