@@ -146,11 +146,11 @@ class Hacker(Person):
 def main():
 
     # Creating the cipher
-    cipher1 = cipher.Unbreakable("above")
+    cipher1 = cipher.Caesar(3)
 
     # Creating the people
-    person1 = Sender("above")
-    person2 = Receiver("above")
+    person1 = Sender(3)
+    person2 = Receiver(3)
     person1.set_cipher(cipher1)
     person2.set_cipher(cipher1)
 
@@ -163,7 +163,7 @@ def main():
     # Hacker trying to decode message
     person3 = Hacker()
     person3.set_cipher(cipher1)
-    person3.set_cipher_type("U")
+    person3.set_cipher_type("C")
     hacked_message = person3.operate_cipher(encoded_message)
     print("The hacked message is: %s" % hacked_message)
 
