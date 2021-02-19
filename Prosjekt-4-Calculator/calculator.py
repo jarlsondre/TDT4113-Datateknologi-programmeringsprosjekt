@@ -1,6 +1,7 @@
 from function import Function, Operator
 import numpy
 from container import Queue, Stack
+import re
 
 class Calculator:
 
@@ -56,7 +57,32 @@ class Calculator:
                 temp_stack.push(current_item)
         while not temp_stack.is_empty():  # Pushing the remaining elements from stack to queue
             self.output_queue.push(temp_stack.pop())
-     
+    
+    def text_parser(self, input_text): 
+        targets = "|".join(["^" + func for func in self.functions.keys()]) # Matching functions
+        targets += "|[-0-9.]+" # Matching numbers
+        targets += "|" + "|".join(["^" + op for op in self.operators.keys()]) # Matching operators
+        targets += "|\(|\)"  # Matching parentheses
+
+        text_copy = input_text.replace(" ", "").upper()
+        output_list = []
+        while len(text_copy) > 0:
+            match = re.search(targets, text_copy)
+            output_list.append(text_copy[0:match.end(0)])
+            text_copy = text_copy[match.end(0):]
+        return_queue = Queue()
+        for elem in output_list:
+            if re.match("[-0-9.]+", elem) is None:
+                return_queue.push(elem)
+            else:
+                return_queue.push(float(elem))
+        return return_queue
+    
+    def calculate_expression(self, txt):
+        parsed_text = self.text_parser(txt)
+        rpn_queue = self.build_rpn_queue(parsed_text)
+        result = self.evaluate_rpn_queue()
+        return result
 
 
 
@@ -85,4 +111,16 @@ def self_made_test1():
     print(calc.output_queue)
     print(calc.evaluate_rpn_queue())
 
-self_made_test1()
+def self_made_test2():
+    calc = Calculator()
+    calc.text_parser("exp (1 add 7 multiply 2)")
+
+def self_made_test3():
+    text1 = "EXP (1 add 2 multiply 3)"
+    text2 = "((15 DIVIDE (7 SUBTRACT (1 ADD 1))) MULTIPLY 3) SUBTRACT (2 ADD (1 ADD 1))"
+    calc = Calculator()
+    calc.build_rpn_queue(calc.text_parser(text1))
+    print(calc.calculate_expression(text1))
+    print(calc.calculate_expression(text2))
+
+self_made_test3()
