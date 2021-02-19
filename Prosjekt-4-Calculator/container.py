@@ -20,6 +20,9 @@ class Container():
     def peek(self):
         pass
 
+    def __str__(self):
+        return self._items.__str__()
+
 
 class Queue(Container):
     
