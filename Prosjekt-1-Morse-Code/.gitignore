@@ -1,9 +1,0 @@
-
-# Text-editor/IDE Files
-.idea
-.vscode
-
-# Compiled code
-__pycache__
-
-
