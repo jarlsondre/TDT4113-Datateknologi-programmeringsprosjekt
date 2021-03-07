@@ -1,35 +1,31 @@
-""" Class for the FSM """
-
+from kpc_agent import KPCAgent
+from rule import Rule
 
 class FSM:
     """ Class for the finite state machine """
 
-    def __init__(self) -> None:
-        self.state = 0
-        self.rule_list = None
+    def __init__(self, agent: KPCAgent) -> None:
+        self.state = 'START'
+        self.agent = agent
+        self.rules = []
 
-    def add_rule(self):
+    def add_rule(self, rule: Rule):
         """ Add a new rule to end of the FSM's rule list """
-        pass
+        self.rules.append(rule)
 
     def get_next_signal(self):
         """ Query the agent for the next signal """
         pass
 
-    def run(self):
+    def run(self, START, END):
         """ Begin in the initial state and then
         repeatedly call get_next_signal until reaching the final state """
-        pass
+        self.state = START
+        while self.state != END:
+            signal = self.agent.get_next_signal()
+            for rule in self.rules:
+                if rule.match(self.state, signal['symbol']):
+                    self.state = rule.new_state
+                    rule.action(signal['symbol'])
+                    break
 
-
-class Rule:
-    """ Class for Rules that can be stored within an FSM """
-
-    def match(self):
-        """ Check whether the rule condition is fulfillled """
-        pass
-
-    def fire(self):
-        """ use the consequent rule to set the next state of the FSM
-        and call the appropriate agent action method """
-        pass
