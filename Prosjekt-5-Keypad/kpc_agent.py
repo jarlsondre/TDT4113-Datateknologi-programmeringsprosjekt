@@ -4,7 +4,7 @@
 class KPCAgent:
     """ Class for the KPC Agent """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.keypad = None
 
     def reset_passcode_entry(self):

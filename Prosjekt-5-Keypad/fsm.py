@@ -4,7 +4,7 @@
 class FSM:
     """ Class for the finite state machine """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.state = 0
 
     def add_rule(self):
