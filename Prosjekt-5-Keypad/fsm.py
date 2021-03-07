@@ -6,6 +6,7 @@ class FSM:
 
     def __init__(self) -> None:
         self.state = 0
+        self.rule_list = None
 
     def add_rule(self):
         """ Add a new rule to end of the FSM's rule list """
@@ -19,6 +20,10 @@ class FSM:
         """ Begin in the initial state and then
         repeatedly call get_next_signal until reaching the final state """
         pass
+
+
+class Rule:
+    """ Class for Rules that can be stored within an FSM """
 
     def match(self):
         """ Check whether the rule condition is fulfillled """
