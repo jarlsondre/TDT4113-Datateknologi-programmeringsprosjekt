@@ -29,6 +29,9 @@ class KPCAgent:
         self.passcode_buffer = ""
         self.led_board.powering_up()
 
+    def clear_buffer(self, _signal):
+        self.passcode_buffer = ""
+
     def get_next_signal(self):
         """ Query the next keypad for the next pressed key """
         if self.override_signal != "":
@@ -48,6 +51,7 @@ class KPCAgent:
             self.led_board.login()
             self.override_signal = "y"
         else:
+            self.led_board.wrong_password()
             self.override_signal = "n"
 
     def validate_passcode_change(self, _signal):

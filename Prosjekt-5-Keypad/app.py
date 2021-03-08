@@ -40,12 +40,12 @@ rules = [
         current=State.CHECK_PASSWORD,
         next=State.MENY,
         signal=Rule.signal_is_specific('y'),
-        action=fsm.agent.reset_passcode_entry
+        action=fsm.agent.clear_buffer
     ), Rule(  # A4
         current=State.CHECK_PASSWORD,
         next=State.START,
         signal=Rule.signal_is_any,
-        action=fsm.agent.reset_passcode_entry
+        action=fsm.agent.clear_buffer
     ), Rule(  # A1
         current=State.MENY,
         next=State.INPUT_NEW_PASSWORD,
@@ -75,17 +75,17 @@ rules = [
         current=State.MENY,
         next=State.CONFIRM_LOGOUT,
         signal=Rule.signal_is_specific('#'),
-        action=fsm.agent.reset_passcode_entry
+        action=fsm.agent.clear_buffer
     ), Rule(  # LOGOUT
         current=State.CONFIRM_LOGOUT,
         next=State.START,
         signal=Rule.signal_is_specific('#'),
-        action=fsm.agent.reset_passcode_entry
+        action=fsm.agent.exit_action
     ), Rule(  # LOGOUT CANCELLED
         current=State.CONFIRM_LOGOUT,
         next=State.MENY,
         signal=Rule.signal_is_any,
-        action=fsm.agent.reset_passcode_entry
+        action=fsm.agent.clear_buffer
     ), Rule(  # A2
         current=State.INPUT_NEW_PASSWORD,
         next=State.INPUT_NEW_PASSWORD,
