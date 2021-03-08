@@ -11,17 +11,15 @@ from GPIOSimulator_v5 import GPIOSimulator
 class KPCAgent:
     """ Class for the KPC Agent """
 
-    def __init__(self, keypad: Keypad, led_board: Leds,
-                 override_signal: str, l_id: int = 0, l_dur: int = 0) -> None:
+    def __init__(self, keypad: Keypad, led_board: Leds, l_id: int = 0, l_dur: int = 0) -> None:
         self.keypad = keypad
         self.led_board = led_board
         self.password_path = './password_file.txt'
-        self.override_signal = override_signal
+        self.override_signal = ""
         self.passcode_buffer = ""
         self.l_id = l_id
         self.l_dur = l_dur
         self.twinkle_time = 0.5  # Turns on the light for 0.5 seconds
-        self.fully_active = False
 
     def write_symbol_to_buffer(self, char):
         """ Write a character to the password buffer """
@@ -34,8 +32,13 @@ class KPCAgent:
 
     def get_next_signal(self):
         """ Query the next keypad for the next pressed key """
-        # if self.override_signal != "":
-        #     return self.override_signal
+        if self.override_signal != "":
+            return_value = {
+                'symbol' : self.override_signal,
+                'duration': 0
+            }
+            self.override_signal = "" # Resetting the signal before returning
+            return return_value
         return self.keypad.read()
 
     def verify_login(self, *args) -> None:
@@ -44,7 +47,9 @@ class KPCAgent:
             password = password_file.readlines()[0]
         if password == self.passcode_buffer:
             self.led_board.login()
-            self.fully_active = True
+            self.override_signal = "y"
+        else:
+            self.override_signal = "n"
 
     def validate_passcode_change(self, new_passcode: str):
         """ Check that new password is legal """
@@ -66,7 +71,7 @@ class KPCAgent:
         """ Twinkle all LEDs on the LED Board """
         self.led_board.login()
 
-    def exit_action(self):
+    def exit_action(self, *args):
         """ Call LED Board to initiate power down lighting sequence """
         self.led_board.logout()
 
@@ -77,13 +82,13 @@ def main():
     my_keypad = Keypad(my_gpio_simulator)
     my_ledboard = Leds(my_gpio_simulator)
 
-    my_agent = KPCAgent(my_keypad, my_ledboard, "override")
-    # login_result = my_agent.verify_login("jarlerul123")
-    # print(f"Password match: {login_result}")
+    my_agent = KPCAgent(my_keypad, my_ledboard)
 
     new_passcode = "12399"
     new_passcode_result = my_agent.validate_passcode_change(new_passcode)
     print(new_passcode_result)
+
+  
 
 
 if __name__ == "__main__":

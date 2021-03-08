@@ -15,14 +15,14 @@ class FSM:
 
     def get_next_signal(self):
         """ Query the agent for the next signal """
-        pass
+        return self.agent.get_next_signal()
 
     def run(self, START, END):
         """ Begin in the initial state and then
         repeatedly call get_next_signal until reaching the final state """
         self.state = START
         while self.state != END:
-            signal = self.agent.get_next_signal()
+            signal = self.get_next_signal()
             for rule in self.rules:
                 if rule.match(self.state, signal['symbol']):
                     rule.action(signal['symbol'])

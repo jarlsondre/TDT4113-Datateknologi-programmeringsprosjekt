@@ -20,31 +20,41 @@ def go_to_active_if_unlocked():
     return State.START
 
 rules = [
-    Rule(
+    Rule( # A1
         current=State.START,
         next=State.INPUT_PASSWORD,
         signal=Rule.signal_is_any,
         action=fsm.agent.reset_passcode_entry
-    ), Rule(
+    ), Rule( # A2
         current=State.INPUT_PASSWORD,
         next=State.INPUT_PASSWORD,
         signal=Rule.signal_is_digit,
         action=fsm.agent.write_symbol_to_buffer
-    ), Rule(
+    ), Rule( # A3
         current=State.INPUT_PASSWORD,
-        next=go_to_active_if_unlocked,
+        next=State.CHECK_PASSWORD,
         signal=Rule.signal_is_specific('*'),
         action=fsm.agent.verify_login
-    ), Rule(
+    ),Rule( # A4
         current=State.INPUT_PASSWORD,
-        next=State.START,
-        signal=Rule.signal_is_specific('#'),
-        action=fsm.agent.reset_passcode_entry
-    ), Rule(
-        current=State.MENY,
         next=State.START,
         signal=Rule.signal_is_any,
         action=fsm.agent.reset_passcode_entry
+    ),Rule( # A5
+        current=State.CHECK_PASSWORD,
+        next=State.MENY,
+        signal=Rule.signal_is_specific('y'),
+        action=fsm.agent.reset_passcode_entry
+    ),Rule( # A4
+        current=State.CHECK_PASSWORD,
+        next=State.START,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.reset_passcode_entry
+    ), Rule( # Finished, logging out
+        current=State.MENY,
+        next=State.END,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.exit_action
     )
 ]
 
