@@ -14,10 +14,6 @@ keypad = Keypad(gpio)
 agent = KPCAgent(keypad, leds, '*')
 fsm = FSM(agent)
 
-def go_to_active_if_unlocked():
-    if agent.fully_active:
-        return State.MENY
-    return State.START
 
 rules = [
     Rule( # A1
