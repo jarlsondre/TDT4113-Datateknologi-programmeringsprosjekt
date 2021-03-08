@@ -20,7 +20,7 @@ rules = [
         current=State.START,
         next=State.INPUT_PASSWORD,
         signal=Rule.signal_is_any,
-        action=fsm.agent.reset_passcode_entry
+        action=fsm.agent.flash_leds
     ), Rule( # A2
         current=State.INPUT_PASSWORD,
         next=State.INPUT_PASSWORD,
@@ -46,12 +46,45 @@ rules = [
         next=State.START,
         signal=Rule.signal_is_any,
         action=fsm.agent.reset_passcode_entry
-
-        # ----------------
     ),Rule( # A1
         current=State.MENY,
         next=State.INPUT_NEW_PASSWORD,
         signal=Rule.signal_is_specific('*'),
+        action=fsm.agent.reset_passcode_entry
+    ),Rule( # SET LED ID
+        current=State.MENY,
+        next=State.LED_DURATION,
+        signal=Rule.signal_is_led_number,
+        action=fsm.agent.set_l_id
+    ),Rule( # SET LED DURATION
+        current=State.LED_DURATION,
+        next=State.LED_DURATION,
+        signal=Rule.signal_is_digit,
+        action=fsm.agent.write_symbol_to_buffer
+    ),Rule( # TURN ON LED
+        current=State.LED_DURATION,
+        next=State.MENY,
+        signal=Rule.signal_is_specific('*'),
+        action=fsm.agent.light_one_led
+    ),Rule( # LED DURATION WRONG INPUT
+        current=State.LED_DURATION,
+        next=State.MENY,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.reset_passcode_entry
+    ),Rule( # CONFIRM LOGOUT
+        current=State.MENY,
+        next=State.CONFIRM_LOGOUT,
+        signal=Rule.signal_is_specific('#'),
+        action=fsm.agent.reset_passcode_entry
+    ),Rule( # LOGOUT
+        current=State.CONFIRM_LOGOUT,
+        next=State.START,
+        signal=Rule.signal_is_specific('#'),
+        action=fsm.agent.reset_passcode_entry
+    ),Rule( # LOGOUT CANCELLED
+        current=State.CONFIRM_LOGOUT,
+        next=State.MENY,
+        signal=Rule.signal_is_any,
         action=fsm.agent.reset_passcode_entry
     ),Rule( # A2
         current=State.INPUT_NEW_PASSWORD,
@@ -63,6 +96,11 @@ rules = [
         next=State.VALIDATE_NEW_PASSWORD,
         signal=Rule.signal_is_specific('*'),
         action=fsm.agent.validate_passcode_change
+    ),Rule( # A6
+        current=State.INPUT_NEW_PASSWORD,
+        next=State.MENY,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.reset_passcode_entry
     ),Rule( # A2
         current=State.VALIDATE_NEW_PASSWORD,
         next=State.VALIDATE_NEW_PASSWORD,
@@ -73,6 +111,11 @@ rules = [
         next=State.MENY,
         signal=Rule.signal_is_specific('*'),
         action=fsm.agent.validate_and_write_new_passcode
+    ),Rule( # A6
+        current=State.VALIDATE_NEW_PASSWORD,
+        next=State.MENY,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.reset_passcode_entry
     )
 ]
 

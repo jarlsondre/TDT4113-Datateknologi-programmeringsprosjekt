@@ -21,7 +21,7 @@ class Rule:
     def match(self, current_state, signal):
         """ Check whether the rule condition is fulfillled """
         if current_state is self.current and self.signal(signal):
-            print(current_state) 
+            print(", state =", current_state) 
         return current_state is self.current and self.signal(signal)
 
     def give_new_state(self):
@@ -32,6 +32,10 @@ class Rule:
     @staticmethod
     def signal_is_digit(signal):
         return 48 <= ord(signal) <= 57
+
+    @staticmethod
+    def signal_is_led_number(signal):
+        return 48 <= ord(signal) <= 53
 
     @staticmethod
     def signal_is_any(_signal):

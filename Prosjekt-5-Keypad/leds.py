@@ -69,6 +69,7 @@ class Leds:
             self.show()
             time.sleep(sleep)
             self.turn_off_leds()
+            self.show()
 
     def show(self):
         self.gpio.show_leds_states()

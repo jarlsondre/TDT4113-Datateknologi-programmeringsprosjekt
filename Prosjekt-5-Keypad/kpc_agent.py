@@ -20,7 +20,6 @@ class KPCAgent:
         self.new_passcode = ""
         self.l_id = l_id
         self.l_dur = l_dur
-        self.twinkle_time = 0.5  # Turns on the light for 0.5 seconds
 
     def write_symbol_to_buffer(self, char):
         """ Write a character to the password buffer """
@@ -53,7 +52,7 @@ class KPCAgent:
             self.override_signal = "n"
 
 
-    def validate_passcode_change(self):
+    def validate_passcode_change(self, _signal):
         """ Check that new password is legal """
         target = "^[0-9]*$"
         if len(self.passcode_buffer) < 4 or re.match(
@@ -61,23 +60,31 @@ class KPCAgent:
             self.override_signal = "n"
         else:
             self.new_passcode = self.passcode_buffer
+        self.passcode_buffer = ""
 
-    def validate_and_write_new_passcode(self): 
+    def validate_and_write_new_passcode(self, _signal): 
+        print(self.passcode_buffer, self.new_passcode)
         if self.passcode_buffer == self.new_passcode: 
             with open(self.password_path, 'w') as password_file:
                 password_file.write(self.new_passcode)
+            print("Successfully changed password")
         else:
-            self.override_signal = "n"
+            print("Passwords didn't match")
 
-    def light_one_led(self):
+    def set_l_id(self, l_id):
+        self.l_id = int(l_id)
+
+    def light_one_led(self, _signal):
         """ Light the correct LED for the correct amount of time """
-        pattern = [[0] * 6, self.l_dur]
-        pattern[0][self.l_id] = 1
+        self.l_dur = int(self.passcode_buffer)
+        self.passcode_buffer = ""   # Resetting the buffer 
+        pattern = [[[0] * 6, self.l_dur]]
+        pattern[0][0][self.l_id] = 1
         self.led_board.pattern(pattern)
 
-    def flash_leds(self):
+    def flash_leds(self, _signal):
         """ Flash all LEDs on the LED Board """
-        self.led_board.pattern([[1] * 6, 1])
+        self.led_board.powering_up()
 
     def twinkle_leds(self):
         """ Twinkle all LEDs on the LED Board """
