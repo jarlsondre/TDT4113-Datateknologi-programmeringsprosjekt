@@ -46,11 +46,33 @@ rules = [
         next=State.START,
         signal=Rule.signal_is_any,
         action=fsm.agent.reset_passcode_entry
-    ), Rule( # Finished, logging out
+
+        # ----------------
+    ),Rule( # A1
         current=State.MENY,
-        next=State.END,
-        signal=Rule.signal_is_any,
-        action=fsm.agent.exit_action
+        next=State.INPUT_NEW_PASSWORD,
+        signal=Rule.signal_is_specific('*'),
+        action=fsm.agent.reset_passcode_entry
+    ),Rule( # A2
+        current=State.INPUT_NEW_PASSWORD,
+        next=State.INPUT_NEW_PASSWORD,
+        signal=Rule.signal_is_digit,
+        action=fsm.agent.write_symbol_to_buffer
+    ),Rule( # A7
+        current=State.INPUT_NEW_PASSWORD,
+        next=State.VALIDATE_NEW_PASSWORD,
+        signal=Rule.signal_is_specific('*'),
+        action=fsm.agent.validate_passcode_change
+    ),Rule( # A2
+        current=State.VALIDATE_NEW_PASSWORD,
+        next=State.VALIDATE_NEW_PASSWORD,
+        signal=Rule.signal_is_digit,
+        action=fsm.agent.write_symbol_to_buffer
+    ),Rule( # A7
+        current=State.VALIDATE_NEW_PASSWORD,
+        next=State.MENY,
+        signal=Rule.signal_is_specific('*'),
+        action=fsm.agent.validate_and_write_new_passcode
     )
 ]
 

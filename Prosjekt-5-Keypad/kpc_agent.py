@@ -17,6 +17,7 @@ class KPCAgent:
         self.password_path = './password_file.txt'
         self.override_signal = ""
         self.passcode_buffer = ""
+        self.new_passcode = ""
         self.l_id = l_id
         self.l_dur = l_dur
         self.twinkle_time = 0.5  # Turns on the light for 0.5 seconds
@@ -51,11 +52,22 @@ class KPCAgent:
         else:
             self.override_signal = "n"
 
-    def validate_passcode_change(self, new_passcode: str):
+
+    def validate_passcode_change(self):
         """ Check that new password is legal """
         target = "^[0-9]*$"
-        return not len(new_passcode) < 4 or re.match(
-            target, new_passcode) is None
+        if len(self.passcode_buffer) < 4 or re.match(
+            target, self.passcode_buffer) is None:
+            self.override_signal = "n"
+        else:
+            self.new_passcode = self.passcode_buffer
+
+    def validate_and_write_new_passcode(self): 
+        if self.passcode_buffer == self.new_passcode: 
+            with open(self.password_path, 'w') as password_file:
+                password_file.write(self.new_passcode)
+        else:
+            self.override_signal = "n"
 
     def light_one_led(self):
         """ Light the correct LED for the correct amount of time """
@@ -71,7 +83,7 @@ class KPCAgent:
         """ Twinkle all LEDs on the LED Board """
         self.led_board.login()
 
-    def exit_action(self, *args):
+    def exit_action(self, _signal):
         """ Call LED Board to initiate power down lighting sequence """
         self.led_board.logout()
 
@@ -82,13 +94,13 @@ def main():
     my_keypad = Keypad(my_gpio_simulator)
     my_ledboard = Leds(my_gpio_simulator)
 
-    my_agent = KPCAgent(my_keypad, my_ledboard)
+    my_agent = KPCAgent(my_keypad, my_ledboard, "override")
+    # login_result = my_agent.verify_login("jarlerul123")
+    # print(f"Password match: {login_result}")
 
     new_passcode = "12399"
     new_passcode_result = my_agent.validate_passcode_change(new_passcode)
     print(new_passcode_result)
-
-  
 
 
 if __name__ == "__main__":
