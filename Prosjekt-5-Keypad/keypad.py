@@ -12,10 +12,14 @@ class Keypad:
     Interface to the keypad
     """
 
-    def __init__(self, gpio:GPIO.GPIOSimulator, polling_rate_hz:int = 50) -> None:
+    def __init__(self, gpio: GPIO.GPIOSimulator,
+                 polling_rate_hz: int = 50) -> None:
         self.gpio = gpio
         self.polling_rate_hz = polling_rate_hz
-        self.cols = [GPIO.PIN_KEYPAD_COL_0, GPIO.PIN_KEYPAD_COL_1, GPIO.PIN_KEYPAD_COL_2]
+        self.cols = [
+            GPIO.PIN_KEYPAD_COL_0,
+            GPIO.PIN_KEYPAD_COL_1,
+            GPIO.PIN_KEYPAD_COL_2]
         self.rows = [GPIO.PIN_KEYPAD_ROW_0, GPIO.PIN_KEYPAD_ROW_1,
                      GPIO.PIN_KEYPAD_ROW_2, GPIO.PIN_KEYPAD_ROW_3]
         self.mapping = {
@@ -44,7 +48,7 @@ class Keypad:
         click_time = time.time()
         self.gpio.output(row, self.gpio.HIGH)
         while self.gpio.input(col):
-            time.sleep(1/self.polling_rate_hz)
+            time.sleep(1 / self.polling_rate_hz)
         self.gpio.output(row, self.gpio.LOW)
         return {
             'symbol': self.mapping[(row, col)],
@@ -57,7 +61,7 @@ class Keypad:
         :return: row, col
         """
         while True:
-            time.sleep(1/self.polling_rate_hz)
+            time.sleep(1 / self.polling_rate_hz)
             for row in self.rows:
                 self.gpio.output(row, self.gpio.HIGH)
                 for col in self.cols:

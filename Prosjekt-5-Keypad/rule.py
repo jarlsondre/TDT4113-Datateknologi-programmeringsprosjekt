@@ -3,16 +3,15 @@ from typing import Any, Callable, Union
 from inspect import isfunction
 
 
-
 class Rule:
     """ Class for Rules that can be stored within an FSM """
 
     def __init__(self,
-            current: State,
-            next: Union[Callable, State],
-            signal: Callable,
-            action: Callable
-    ) -> None:
+                 current: State,
+                 next: Union[Callable, State],
+                 signal: Callable,
+                 action: Callable
+                 ) -> None:
         self.current = current
         self.signal = signal
         self.next = next
@@ -21,7 +20,7 @@ class Rule:
     def match(self, current_state, signal):
         """ Check whether the rule condition is fulfillled """
         if current_state is self.current and self.signal(signal):
-            print(", state =", current_state) 
+            print(", state =", current_state)
         return current_state is self.current and self.signal(signal)
 
     def give_new_state(self):

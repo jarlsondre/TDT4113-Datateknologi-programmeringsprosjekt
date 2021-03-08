@@ -14,8 +14,15 @@ PIN_KEYPAD_COL_0 = 7
 PIN_KEYPAD_COL_1 = 8
 PIN_KEYPAD_COL_2 = 9
 
-charlieplexing_pins = [PIN_CHARLIEPLEXING_0, PIN_CHARLIEPLEXING_1, PIN_CHARLIEPLEXING_2]
-keypad_row_pins = [PIN_KEYPAD_ROW_0, PIN_KEYPAD_ROW_1, PIN_KEYPAD_ROW_2, PIN_KEYPAD_ROW_3]
+charlieplexing_pins = [
+    PIN_CHARLIEPLEXING_0,
+    PIN_CHARLIEPLEXING_1,
+    PIN_CHARLIEPLEXING_2]
+keypad_row_pins = [
+    PIN_KEYPAD_ROW_0,
+    PIN_KEYPAD_ROW_1,
+    PIN_KEYPAD_ROW_2,
+    PIN_KEYPAD_ROW_3]
 keypad_col_pins = [PIN_KEYPAD_COL_0, PIN_KEYPAD_COL_1, PIN_KEYPAD_COL_2]
 keypad_pins = keypad_row_pins + keypad_col_pins
 valid_pins = keypad_pins + charlieplexing_pins
@@ -61,7 +68,9 @@ class GPIOSimulator:
         self.__led_states = [self.OFF] * N_LEDS
         self.__key_states = [False] * len(self.__key_coord)
 
-        self.__listener = Listener(on_press=self.__on_press, on_release=self.__on_release)
+        self.__listener = Listener(
+            on_press=self.__on_press,
+            on_release=self.__on_release)
         self.__listener.start()
 
     def setup(self, pin, mode, state=None):
@@ -83,7 +92,8 @@ class GPIOSimulator:
     def input(self, pin):
         """ Carry out hardware simulation and return the state of an input pin """
         assert pin in valid_pins, "Invalid input pin"
-        assert self.__pin_modes[pin] == self.IN, "Pin{} is not in input mode!".format(pin)
+        assert self.__pin_modes[pin] == self.IN, "Pin{} is not in input mode!".format(
+            pin)
         if pin in keypad_pins:
             self.__update_keypad_pin_states()
         return self.__pin_states[pin]
@@ -91,7 +101,8 @@ class GPIOSimulator:
     def output(self, pin, state):
         """ set the state to an output pin, and carry out hardware simulation """
         assert pin in valid_pins, "Invalid output pin"
-        assert self.__pin_modes[pin] == self.OUT, "Pin{} is not in output mode!".format(pin)
+        assert self.__pin_modes[pin] == self.OUT, "Pin{} is not in output mode!".format(
+            pin)
         if pin in keypad_pins:
             self.__pin_states[pin] = state
         else:
@@ -114,7 +125,8 @@ class GPIOSimulator:
             pressed_key_index = self.__key_states.index(True)
 
             # retrieve the coordinates of the pressed
-            pressed_row, pressed_col = list(self.__key_coord.values())[pressed_key_index]
+            pressed_row, pressed_col = list(
+                self.__key_coord.values())[pressed_key_index]
 
             # get the corresponding pins
             row_pin = pressed_row + PIN_KEYPAD_ROW_0

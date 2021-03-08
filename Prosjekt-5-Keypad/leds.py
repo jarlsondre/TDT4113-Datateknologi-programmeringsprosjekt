@@ -43,11 +43,11 @@ class Leds:
 
     def powering_up(self):
         """Sequence to be displayed when powering up"""
-        self.pattern([[[1]*6, 0.5]])
+        self.pattern([[[1] * 6, 0.5]])
 
     def wrong_password(self):
         """Sequence to be displayed when the user enters a wrong password"""
-        pattern = [[[i % 2]*6, 0.1] for i in range(6)]
+        pattern = [[[i % 2] * 6, 0.1] for i in range(6)]
         self.pattern(pattern)
 
     def login(self):

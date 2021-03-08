@@ -1,6 +1,7 @@
 from kpc_agent import KPCAgent
 from rule import Rule
 
+
 class FSM:
     """ Class for the finite state machine """
 
@@ -28,4 +29,3 @@ class FSM:
                     rule.action(signal['symbol'])
                     self.state = rule.give_new_state()
                     break
-

@@ -1,5 +1,6 @@
 from enum import Enum, auto
 
+
 class State(Enum):
     START = auto()
     INPUT_PASSWORD = auto()
@@ -10,5 +11,3 @@ class State(Enum):
     VALIDATE_NEW_PASSWORD = auto()
     CONFIRM_LOGOUT = auto()
     END = auto()
-
-    

@@ -7,11 +7,11 @@ from leds import Leds
 from GPIOSimulator_v5 import GPIOSimulator
 
 
-
 class KPCAgent:
     """ Class for the KPC Agent """
 
-    def __init__(self, keypad: Keypad, led_board: Leds, l_id: int = 0, l_dur: int = 0) -> None:
+    def __init__(self, keypad: Keypad, led_board: Leds,
+                 l_id: int = 0, l_dur: int = 0) -> None:
         self.keypad = keypad
         self.led_board = led_board
         self.password_path = './password_file.txt'
@@ -34,10 +34,10 @@ class KPCAgent:
         """ Query the next keypad for the next pressed key """
         if self.override_signal != "":
             return_value = {
-                'symbol' : self.override_signal,
+                'symbol': self.override_signal,
                 'duration': 0
             }
-            self.override_signal = "" # Resetting the signal before returning
+            self.override_signal = ""  # Resetting the signal before returning
             return return_value
         return self.keypad.read()
 
@@ -51,20 +51,19 @@ class KPCAgent:
         else:
             self.override_signal = "n"
 
-
     def validate_passcode_change(self, _signal):
         """ Check that new password is legal """
         target = "^[0-9]*$"
         if len(self.passcode_buffer) < 4 or re.match(
-            target, self.passcode_buffer) is None:
+                target, self.passcode_buffer) is None:
             self.override_signal = "n"
         else:
             self.new_passcode = self.passcode_buffer
         self.passcode_buffer = ""
 
-    def validate_and_write_new_passcode(self, _signal): 
+    def validate_and_write_new_passcode(self, _signal):
         print(self.passcode_buffer, self.new_passcode)
-        if self.passcode_buffer == self.new_passcode: 
+        if self.passcode_buffer == self.new_passcode:
             with open(self.password_path, 'w') as password_file:
                 password_file.write(self.new_passcode)
             print("Successfully changed password")
@@ -77,7 +76,7 @@ class KPCAgent:
     def light_one_led(self, _signal):
         """ Light the correct LED for the correct amount of time """
         self.l_dur = int(self.passcode_buffer)
-        self.passcode_buffer = ""   # Resetting the buffer 
+        self.passcode_buffer = ""   # Resetting the buffer
         pattern = [[[0] * 6, self.l_dur]]
         pattern[0][0][self.l_id] = 1
         self.led_board.pattern(pattern)
