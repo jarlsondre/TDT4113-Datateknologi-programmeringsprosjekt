@@ -62,6 +62,7 @@ class Leds:
         self.pattern(list(reversed(pattern)))
 
     def pattern(self, pattern: list) -> None:
+        self.turn_off_leds()
         for states, sleep in pattern:
             for led, state in enumerate(states):
                 if state:
