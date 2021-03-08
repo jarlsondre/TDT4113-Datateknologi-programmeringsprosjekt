@@ -2,13 +2,13 @@
 import itertools as it
 import time
 
-import GPIOSimulator_v5 as GPIO
+from GPIOSimulator_v5 import GPIOSimulator as GPIO
 
 
 class Leds:
     """Interface to the leds"""
 
-    def __init__(self, gpio_instance: GPIO.GPIOSimulator) -> None:
+    def __init__(self, gpio_instance: GPIO) -> None:
         self.leds = [
             ('H', 'L', 'I'),  # led0
             ('L', 'H', 'I'),  # led1
@@ -43,19 +43,22 @@ class Leds:
 
     def powering_up(self):
         """Sequence to be displayed when powering up"""
-        self.pattern([[[1]*6, 1]])
+        self.pattern([[[1]*6, 0.5]])
 
     def wrong_password(self):
         """Sequence to be displayed when the user enters a wrong password"""
-        self.pattern([it.repeat([[1]*6, 0.3, [0]*6, 0.3], 4)])
+        pattern = [[[i % 2]*6, 0.1] for i in range(6)]
+        self.pattern(pattern)
 
     def login(self):
         """Sequence to be displayed when the user in grated access"""
-        self.pattern([[[1, 0, 0, 0, 0, 0][-i:] + [1, 0, 0, 0, 0, 0][:-i], 0.15] for i in range(6)])
+        self.pattern(
+            [[[1, 0, 0, 0, 0, 0][-i:] + [1, 0, 0, 0, 0, 0][:-i], 0.15] for i in range(6)])
 
     def logout(self):
         """Sequence to be displayed when the user logs out"""
-        pattern = [[[1, 0, 0, 0, 0, 0][-i:] + [1, 0, 0, 0, 0, 0][:-i], 0.15] for i in range(6)]
+        pattern = [[[1, 0, 0, 0, 0, 0][-i:] + [1, 0, 0, 0, 0, 0][:-i], 0.15]
+                   for i in range(6)]
         self.pattern(list(reversed(pattern)))
 
     def pattern(self, pattern: list) -> None:
@@ -69,3 +72,17 @@ class Leds:
 
     def show(self):
         self.gpio.show_leds_states()
+
+
+if __name__ == '__main__':
+    gpio = GPIO()
+    leds = Leds(gpio)
+    patterns = {
+        'login': leds.login,
+        'logout': leds.logout,
+        'powerup': leds.powering_up,
+        'wrong_password': leds.wrong_password
+    }
+    for name, func in patterns.items():
+        print(name)
+        func()

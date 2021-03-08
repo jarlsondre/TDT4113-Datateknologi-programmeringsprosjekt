@@ -25,7 +25,7 @@ class FSM:
             signal = self.agent.get_next_signal()
             for rule in self.rules:
                 if rule.match(self.state, signal['symbol']):
-                    self.state = rule.new_state
                     rule.action(signal['symbol'])
+                    self.state = rule.give_new_state()
                     break
 

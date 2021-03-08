@@ -1,4 +1,4 @@
-from enum import Enum
+
 from leds import Leds
 
 from GPIOSimulator_v5 import GPIOSimulator as GPIO
@@ -6,37 +6,49 @@ from kpc_agent import KPCAgent
 from keypad import Keypad
 from fsm import FSM
 from rule import Rule
+from states import State
 
 gpio = GPIO()
 leds = Leds(gpio)
 keypad = Keypad(gpio)
 agent = KPCAgent(keypad, leds, '*')
-fsn = FSM(agent)
+fsm = FSM(agent)
 
-class State(Enum):
-    START = 0
-    INPUT_PASSWORD = 1
-    CHECK_PASSWORD = 2
-    END = 3
-
-def signal_is_digit(signal):
-    return 48 <= ord(signal) <= 57
-
-def all_signals(signal):
-    return True
-
-def signal_is_specific(char):
-    def func(signal):
-        return signal == char
-    return func
+def go_to_active_if_unlocked():
+    if agent.fully_active:
+        return State.MENY
+    return State.START
 
 rules = [
-    Rule(State.START, all_signals, State.INPUT_PASSWORD, fsn.agent.reset_passcode_entry),
-    Rule(State.INPUT_PASSWORD, signal_is_digit, State.INPUT_PASSWORD, fsn.agent.write_to_passcode_buffer), 
-    Rule(State.INPUT_PASSWORD, signal_is_specific('*'), State.START, fsn.agent.verify_login)
+    Rule(
+        current=State.START,
+        next=State.INPUT_PASSWORD,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.reset_passcode_entry
+    ), Rule(
+        current=State.INPUT_PASSWORD,
+        next=State.INPUT_PASSWORD,
+        signal=Rule.signal_is_digit,
+        action=fsm.agent.write_symbol_to_buffer
+    ), Rule(
+        current=State.INPUT_PASSWORD,
+        next=go_to_active_if_unlocked,
+        signal=Rule.signal_is_specific('*'),
+        action=fsm.agent.verify_login
+    ), Rule(
+        current=State.INPUT_PASSWORD,
+        next=State.START,
+        signal=Rule.signal_is_specific('#'),
+        action=fsm.agent.reset_passcode_entry
+    ), Rule(
+        current=State.MENY,
+        next=State.START,
+        signal=Rule.signal_is_any,
+        action=fsm.agent.reset_passcode_entry
+    )
 ]
 
 for rule in rules:
-    fsn.add_rule(rule)
+    fsm.add_rule(rule)
 
-fsn.run(State.START, State.END)
+fsm.run(State.START, State.END)

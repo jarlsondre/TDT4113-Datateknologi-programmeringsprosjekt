@@ -21,23 +21,30 @@ class KPCAgent:
         self.l_id = l_id
         self.l_dur = l_dur
         self.twinkle_time = 0.5  # Turns on the light for 0.5 seconds
+        self.fully_active = False
 
-    def reset_passcode_entry(self):
+    def write_symbol_to_buffer(self, char):
+        """ Write a character to the password buffer """
+        self.passcode_buffer += char
+
+    def reset_passcode_entry(self, _signal):
         """ Clear passcode buffer and initiate a power up lighting sequence on the LED Board """
         self.passcode_buffer = ""
         self.led_board.powering_up()
 
     def get_next_signal(self):
         """ Query the next keypad for the next pressed key """
-        if self.override_signal != "":
-            return self.override_signal
+        # if self.override_signal != "":
+        #     return self.override_signal
         return self.keypad.read()
 
-    def verify_login(self, password_entered: str) -> bool:
+    def verify_login(self, *args) -> None:
         """ Check that the password entered matches password stored in file """
         with open(self.password_path, 'r') as password_file:
             password = password_file.readlines()[0]
-        return password == password_entered
+        if password == self.passcode_buffer:
+            self.led_board.login()
+            self.fully_active = True
 
     def validate_passcode_change(self, new_passcode: str):
         """ Check that new password is legal """
