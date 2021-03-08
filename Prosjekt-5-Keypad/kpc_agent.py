@@ -10,16 +10,15 @@ from GPIOSimulator_v5 import GPIOSimulator
 class KPCAgent:
     """ Class for the KPC Agent """
 
-    def __init__(self, keypad: Keypad, led_board: Leds,
-                 l_id: int = 0, l_dur: int = 0) -> None:
+    def __init__(self, keypad: Keypad, led_board: Leds) -> None:
         self.keypad = keypad
         self.led_board = led_board
         self.password_path = './password_file.txt'
         self.override_signal = ""
         self.passcode_buffer = ""
         self.new_passcode = ""
-        self.l_id = l_id
-        self.l_dur = l_dur
+        self.l_id = 0
+        self.l_dur = 0
 
     def write_symbol_to_buffer(self, char):
         """ Write a character to the password buffer """

@@ -11,7 +11,7 @@ from states import State
 gpio = GPIO()
 leds = Leds(gpio)
 keypad = Keypad(gpio)
-agent = KPCAgent(keypad, leds, '*')
+agent = KPCAgent(keypad, leds)
 fsm = FSM(agent)
 
 
