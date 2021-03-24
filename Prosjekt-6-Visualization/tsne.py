@@ -30,11 +30,16 @@ class TSNE():
 
         for iteration in range(self.max_iteration):
             # calculating q and Q using the current y_is
-            q_values = np.zeros((len(self.data), 2))
-            for d in range(2):
-                for i in range(len(self.data)): 
-                    q_values[i][d] = 1 / (1 + np.linalg.norm(y_values[i] - y_values[d]))
-            print(q_values)
+            q_values = np.zeros((len(self.data), len(self.data)))
+            for i in range(len(self.data)):
+                for j in range(len(self.data)): 
+                    if i != j:
+                        q_values[i][j] = 1/(1 + pow(y_values[i][0] - y_values[j][0], 2) - pow(y_values[i][1] - y_values[j][1], 2))
+                    else:
+                        q_values[i][j] = 0
+                if i == 100:
+                    break
+            print("q_values is ", q_values)
             break
 
 
