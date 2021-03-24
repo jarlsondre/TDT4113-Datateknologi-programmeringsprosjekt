@@ -42,7 +42,7 @@ def isomap(X):
 
     ONE = np.ones(N)
 
-    J = I - ONE @ ONE.T / N / N
+    J = I - ONE @ ONE.T / (N * N)
     B = (-1 / 2) * J @ D_2 @ J
     m = 2
 
@@ -63,9 +63,10 @@ def isomap(X):
         plt.ylim(-100, 100)
     if D == 3:
         plt.scatter(Y[:, 1], Y[:, 0], c=np.arange(N), s=10, marker='.')
-        plt.ylim(-2, 2)
+        plt.ylim(-1, 1)
     plt.show()
 
 X = np.genfromtxt('swiss_data.csv', delimiter=',')
 isomap(X)
 X = np.genfromtxt('digits.csv', delimiter=',') # K = 30
+isomap(X)
