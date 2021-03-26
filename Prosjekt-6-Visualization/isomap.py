@@ -21,29 +21,27 @@ class Isomap:
     """Klasse for å ta inn data fra swiss_data og digits og ta de ned til 2D"""
 
     @staticmethod
-    def geodesic_distance(data):
+    def get_euclidean_distances(data):
+        """Tar inn et datasett og returnerer parvis euclidean distance"""
+        vector = np.sum(data * data, axis=1, keepdims=True)
+        return np.sqrt(np.abs(vector + vector.T - 2 * (data @ data.T)))
+
+    @staticmethod
+    def get_geodesic_distance(data, k_smallest):
         """Finner geodesic_distance """
-        rows, dim = data.shape
-        data_2 = np.square(data)
-        vector = np.sum(data_2, axis=1, keepdims=True)
-        euclidean_distances_2 = vector + vector.T - 2 * data @ data.T
-        euclidean_distances = np.sqrt(np.abs(euclidean_distances_2))
-        if dim == 64:
-            k_smallest = 30
-        else:  # dim == 3:
-            k_smallest = 25
+        rows = data.shape[0]
         d_knn = np.zeros((rows, rows))
-        for i, row in enumerate(euclidean_distances):
-            ind = np.argpartition(row, k_smallest)[:k_smallest]  # Index til de K minste elementene
-            d_knn[i][ind] = euclidean_distances[i][ind]
-        d_geodesic = sklearn.graph_shortest_path(d_knn)
-        return d_geodesic
+        # Setter inn de k minste verdiene
+        for i, row in enumerate(data):
+            ind = np.argpartition(row, k_smallest)[:k_smallest]
+            d_knn[i][ind] = data[i][ind]
+        return sklearn.graph_shortest_path(d_knn)
 
     @staticmethod
     def multidimensional_scaling(d_geo, dim):
         """Utfører multidimensional_scaling"""
         rows = d_geo.shape[0]
-        d_2 = np.square(d_geo)
+        d_2 = d_geo * d_geo
         identity = np.identity(rows)
         one = np.ones(rows)
         centering_matrix = identity - one @ one.T / (rows * rows)
@@ -74,21 +72,24 @@ class Isomap:
             plt.ylim(-1, 1)
         plt.show()
 
-    def swiss(self):
+    @staticmethod
+    def swiss():
         """Tar inn fra swiss_data, regner ut og plotter"""
         data = np.genfromtxt('swiss_data.csv', delimiter=',')
-        d_geo = self.geodesic_distance(data)
-        mds = self.multidimensional_scaling(d_geo, dim=3)
-        self.show(mds, dim=3)
+        euclidean_distances = Isomap.get_euclidean_distances(data)
+        d_geo = Isomap.get_geodesic_distance(euclidean_distances, k_smallest=25)
+        mds = Isomap.multidimensional_scaling(d_geo, dim=3)
+        Isomap.show(mds, dim=3)
 
-    def digits(self):
+    @staticmethod
+    def digits():
         """Tar inn fra digits, regner ut og plotter"""
         data = np.genfromtxt('digits.csv', delimiter=',')
-        d_geo = self.geodesic_distance(data)
-        mds = self.multidimensional_scaling(d_geo, dim=64)
-        self.show(mds, dim=64)
+        euclidean_distances = Isomap.get_euclidean_distances(data)
+        d_geo = Isomap.get_geodesic_distance(euclidean_distances, k_smallest=30)
+        mds = Isomap.multidimensional_scaling(d_geo, dim=64)
+        Isomap.show(mds, dim=64)
 
 
-isomap = Isomap()
-isomap.swiss()
-isomap.digits()
+Isomap.swiss()
+Isomap.digits()
