@@ -37,8 +37,8 @@ class PCA:
             C = np.genfromtxt("digits_label.csv", delimiter=',')
             plt.scatter(self.Y_matrix[:, [0]], self.Y_matrix[:, [1]], s=10, c=C, cmap='jet', marker='.')
         else:
-            # Legge på farge?
-            plt.scatter(self.Y_matrix[:, [0]], self.Y_matrix[:, [1]], s=10, cmap='jet', marker='.')
+            C = np.arange(self.Y_matrix.shape[0])
+            plt.scatter(self.Y_matrix[:, [0]], self.Y_matrix[:, [1]], s=10,c =C, cmap='jet', marker='.')
         plt.show()
 
     def read_from_file(self, fil_navn):
@@ -53,7 +53,3 @@ if __name__ == "__main__":
     # pca.read_from_file("digits.csv")
     # pca.fit()
     # pca.show_result()
-
-# test
-# array = np.array([[1, 2, 3, 4], [1, 2, 3, 4]])
-# print(array.shape)
