@@ -28,7 +28,8 @@ class PCA:
             vectors_t = np.transpose(vectors)
         elif dim - 1 == 2:
             [values, vectors] = np.linalg.eigh(cov_matrix)
-            vectors_t = vectors[-2:]
+            vectors_t = vectors[:, -2:]
+            vectors_t = np.transpose(vectors_t)
         self.transform(vectors_t)
 
     def transform(self, transformation_matrix):
